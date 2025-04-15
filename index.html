@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Carte Urbex</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    #map { height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // Initialisation de la carte
+    const map = L.map('map').setView([48.85, 2.35], 5); // Centre sur la France
+
+    // Tuiles CartoDB Light
+    L.tileLayer('https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap, &copy; CartoDB',
+      maxZoom: 18
+    }).addTo(map);
+
+    // Récupération des points depuis l'API d'Urbexology
+    fetch('https://urbexology.com/api/map')
+      .then(res => res.json())
+      .then(data => {
+        data.forEach(p => {
+          L.marker([p.lat, p.lng])
+            .addTo(map)
+            .bindPopup(`<strong>${p.title}</strong><br>${p.country}`);
+        });
+      });
+  </script>
+</body>
+</html>
