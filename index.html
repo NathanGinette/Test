@@ -27,11 +27,15 @@
     fetch('https://urbexology.com/api/map')
       .then(res => res.json())
       .then(data => {
+        console.log(data); // Vérifie les données dans la console
         data.forEach(p => {
           L.marker([p.lat, p.lng])
             .addTo(map)
             .bindPopup(`<strong>${p.title}</strong><br>${p.country}`);
         });
+      })
+      .catch(err => {
+        console.error("Erreur lors de la récupération des données : ", err);
       });
   </script>
 </body>
