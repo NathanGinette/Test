@@ -23,20 +23,19 @@
       maxZoom: 18
     }).addTo(map);
 
-    // Récupération des points depuis l'API d'Urbexology
-    fetch('https://urbexology.com/api/map')
-      .then(res => res.json())
-      .then(data => {
-        console.log(data); // Vérifie les données dans la console
-        data.forEach(p => {
-          L.marker([p.lat, p.lng])
-            .addTo(map)
-            .bindPopup(`<strong>${p.title}</strong><br>${p.country}`);
-        });
-      })
-      .catch(err => {
-        console.error("Erreur lors de la récupération des données : ", err);
-      });
+    // Données locales pour tester
+    const data = [
+      { "lat": 48.8588443, "lng": 2.2943506, "title": "Tour Eiffel", "country": "France" },
+      { "lat": 45.764043, "lng": 4.835659, "title": "Lyon", "country": "France" },
+      { "lat": 50.850346, "lng": 4.351721, "title": "Bruxelles", "country": "Belgique" }
+    ];
+
+    // Ajout des points à la carte
+    data.forEach(p => {
+      L.marker([p.lat, p.lng])
+        .addTo(map)
+        .bindPopup(`<strong>${p.title}</strong><br>${p.country}`);
+    });
   </script>
 </body>
 </html>
